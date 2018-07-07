@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1D378878-BA46-4C0E-B823-C7E840C28FE2}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>SoteriaEngine</RootNamespace>
-    <AssemblyName>SoteriaEngine</AssemblyName>
+    <ProjectGuid>{216B1ED2-E9FE-476C-B998-9C64D1C81CD7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SampleGame</RootNamespace>
+    <AssemblyName>SampleGame</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,9 +30,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,38 +42,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drawing\Color.cs" />
-    <Compile Include="Drawing\Drawable.cs" />
-    <Compile Include="Drawing\Shapes.cs" />
-    <Compile Include="Drawing\Texture.cs" />
-    <Compile Include="Drawing\Window.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="SDL\CSDL.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SDL\SDL2-CS\LPUtf8StrMarshaler.cs" />
-    <Compile Include="SDL\SDL2-CS\SDL2.cs" />
-    <Compile Include="SDL\SDL2-CS\SDL2_image.cs" />
-    <Compile Include="SDL\SDL2-CS\SDL2_mixer.cs" />
-    <Compile Include="SDL\SDL2-CS\SDL2_ttf.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DevLog.txt" />
-    <Content Include="libpng16-16.dll">
+    <ProjectReference Include="..\SoteriaEngine\SoteriaEngine.csproj">
+      <Project>{1d378878-ba46-4c0e-b823-c7e840c28fe2}</Project>
+      <Name>SoteriaEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SDL2.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SDL2_image.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SoteriaEngine.png" />
-    <Content Include="zlib1.dll">
+    <Content Include="Track1A.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

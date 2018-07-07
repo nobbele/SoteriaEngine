@@ -1,0 +1,74 @@
+﻿Day 1:
+
+Got rendering working with minimalist code in the game.
+
+Rectangle rect = new Rectangle() { x = 10, y = 10, width = 100, height = 150, color = Color.Red, filled = true };
+Window window = new Window("Hello World", 640, 480);
+while (window.Running) {
+    window.Poll();
+    window.Draw(rect);
+    window.Update();
+}
+
+tomorrow i will automate the loop aswell as add a Draw function and Update function in the game, which will probably be a class inheriting SoteriaEngine.Game
+
+Day 2:
+
+Fixed rendering. added texture and transparency support
+
+i added gameobject which you can inherit from to gain access to Update and Start methods.
+GameObject are automatically rendered with a drawable field which you pass in the constructor.
+
+There's also now a Input class which contains what keys a pressed, held or released on that frame 
+and a Time class which contain DeltaTime(frame difference in ms) and FPS
+
+this is how it looks like to get a game running now
+
+class Program
+{
+    static void Main(string[] args) {
+        Game game = new Game();
+        game.Start(title: "Hello World", width: 640, height: 480);
+    }
+}
+class Player : SoteriaEngine.GameObject
+{
+    public Player(Drawable drawable, string name = "") : base(drawable, name) {}
+
+    protected override void Start() {
+    }
+
+    protected override void Update() {
+        int speed = 5;
+        if (Input.KeyDown(Input.Key.w)) {
+            Move(0, -speed);
+        }
+        if (Input.KeyDown(Input.Key.d)) {
+            Move(speed, 0);
+        }
+        if (Input.KeyDown(Input.Key.a)) {
+            Move(-speed, 0);
+        }
+        if (Input.KeyDown(Input.Key.s)) {
+            Move(0, speed);
+        }
+    }
+}
+class Game : SoteriaEngine.Game
+{
+    protected override void Load() {
+        Add(new Player(new DrawableTexture("test.png")));
+        Background = new DrawableTexture(new Texture("Track1A.png", Width, Height), Width, Height);
+    }
+    protected override void Draw(Window window) {
+    }
+    protected override void Update() {
+            
+    }
+}
+
+this would've taken so much more time and way uglier using Day 1 engine.
+
+current lines of code is 278(Code Metrics Results)
+
+tomorrow i am gonna add more features and try to make a working tower defense example game

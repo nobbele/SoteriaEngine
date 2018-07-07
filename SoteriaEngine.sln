@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoteriaEngine", "SoteriaEngine\SoteriaEngine.csproj", "{1D378878-BA46-4C0E-B823-C7E840C28FE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleGame", "SampleGame\SampleGame.csproj", "{216B1ED2-E9FE-476C-B998-9C64D1C81CD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1D378878-BA46-4C0E-B823-C7E840C28FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D378878-BA46-4C0E-B823-C7E840C28FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D378878-BA46-4C0E-B823-C7E840C28FE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{216B1ED2-E9FE-476C-B998-9C64D1C81CD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{216B1ED2-E9FE-476C-B998-9C64D1C81CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{216B1ED2-E9FE-476C-B998-9C64D1C81CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{216B1ED2-E9FE-476C-B998-9C64D1C81CD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
