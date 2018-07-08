@@ -12,15 +12,68 @@ using static SDL2.SDL;
 
 namespace SoteriaEngine
 {
+    public abstract class Shape { }
+    public class Rect : Shape
+    {
+        public float x, y, w, h;
+
+        public Rect(SDL2.SDL.SDL_Rect rect) {
+            x = rect.x; y = rect.y;
+            w = rect.w; h = rect.h;
+        }
+        public Rect(float x, float y, float w, float h) {
+            this.x = x; this.y = y;
+            this.w = w; this.h = h;
+        }
+        public Rect() { }
+
+        public static implicit operator SDL2.SDL.SDL_Rect(Rect me) {
+            return new SDL_Rect() { x = (int)Math.Round(me.x), y = (int)Math.Round(me.y), w = (int)Math.Round(me.w), h = (int)Math.Round(me.h) };
+        }
+        public static implicit operator Rect(SDL2.SDL.SDL_Rect rect) {
+            return new Rect(rect);
+        }
+        public override string ToString() {
+            return string.Format("[x: {2}, y: {3}, width: {0}, height: {1}", w, h, x, y);
+        }
+    }
     public struct Vector2
     {
         public float x, y;
         public Vector2(float x, float y) {
             this.x = x; this.y = y;
         }
+        public override string ToString() {
+            return string.Format("[x: {0}, y: {1}]", x, y);
+        }
+    }
+    public abstract class Component
+    {
+        public GameObject Parent { get; }
+        public virtual void Start() { }
+        public virtual void Update() { }
+        public Component(GameObject parent) {
+            Parent = parent;
+        }
     }
     public abstract class GameObject
     {
+        internal List<Component> Components = new List<Component>();
+        public void AddComponent<T>() where T : Component {
+            Components.Add((Component)Activator.CreateInstance(typeof(T), this));
+        }
+        public T GetComponent<T>() where T : Component {
+            foreach(var component in Components) {
+                if (component.GetType() == typeof(T))
+                    return (T)component;
+            }
+            return null;
+        }
+        public static List<GameObject> Root {
+            get {
+                return Game.GameObjects;
+            }
+        }
         public string Name { get; set; }
         public Drawable Drawable { get; set; }
         public Vector2 Position {
@@ -32,9 +85,14 @@ namespace SoteriaEngine
                 Drawable.x = value.x;
             }
         }
+        public Vector2 Size { get; set; } = new Vector2();
         public GameObject(Drawable drawable, string name = "") {
             Name = name;
             Drawable = drawable;
+            if(Drawable.GetType() == typeof(DrawableTexture)) {
+                DrawableTexture tex = Drawable as DrawableTexture;
+                Size = new Vector2(tex.width, tex.height);
+            }
         }
 
         internal protected virtual void Start() {}
@@ -43,16 +101,20 @@ namespace SoteriaEngine
         internal void Draw(Window window) {
             window.Draw(Drawable);
         }
-        public void Move(int x, int y) {
+        public void Scale(float w, float h) {
+            Size = new Vector2(Size.x + w, Size.y + h);
+        }
+        public void Move(float x, float y) {
             Position = new Vector2(Position.x + x, Position.y + y);
         }
     }
     public abstract class Game
     {
-        private List<GameObject> GameObjects { get; set; } = new List<GameObject>();
-        protected void Add(GameObject obj) {
+        internal static List<GameObject> GameObjects { get; set; } = new List<GameObject>();
+        protected GameObject Add(GameObject obj) {
             GC.KeepAlive(obj);
             GameObjects.Add(obj);
+            return obj;
         }
 
         public string Title { get; private set; }
@@ -68,6 +130,7 @@ namespace SoteriaEngine
             Window.Running = true;
             _load();
             Load();
+            _start();
             int timer = DateTime.Now.Second;
             int fpscounter = 0;
             while (Window.Running) {
@@ -100,6 +163,14 @@ namespace SoteriaEngine
         internal void _load() {
             Input.Load();
         }
+        internal void _start() {
+            foreach (GameObject obj in GameObjects) {
+                obj.Start();
+                foreach (Component comp in obj.Components) {
+                    comp.Start();
+                }
+            }
+        }
         protected virtual void Draw(Window window) {}
         internal void _draw(Window window) {
             foreach (GameObject obj in GameObjects) {
@@ -111,6 +182,9 @@ namespace SoteriaEngine
             Input.Update();
             foreach (GameObject obj in GameObjects) {
                 obj.Update();
+                foreach (Component comp in obj.Components) {
+                    comp.Update();
+                }
             }
         }
 

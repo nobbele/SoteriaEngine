@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components.cs" />
+    <Compile Include="Debug.cs" />
     <Compile Include="Drawing\Color.cs" />
     <Compile Include="Drawing\Drawable.cs" />
     <Compile Include="Drawing\Shapes.cs" />
@@ -80,6 +82,9 @@
     <Content Include="zlib1.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Physics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

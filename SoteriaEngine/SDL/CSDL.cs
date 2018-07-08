@@ -86,6 +86,9 @@ namespace CSDL
         public static uint GetTicks() {
             return SDL_GetTicks();
         }
+        public static bool IntersectRect(SDL_Rect rect1, SDL_Rect rect2, out SDL_Rect intersection) {
+            return SDL_IntersectRect(ref rect1, ref rect2, out intersection) == SDL_bool.SDL_TRUE;
+        }
     }
     internal class SDLWindow
     {
